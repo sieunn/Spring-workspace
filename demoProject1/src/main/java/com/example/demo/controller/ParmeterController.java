@@ -137,6 +137,8 @@ public class ParmeterController {
 		log.info("fruitList : " + fruitList);
 		
 		log.info("paramMap :" + paramMap);
+		//-> key (name 속성값)이 중복되면 덮어쓰기가 됨
+		// 같은 name 속성 파라미터가 String[] List로 저장이 되는 것은 힘듬
 		
 		return "redirect:/param/main";
 	}
