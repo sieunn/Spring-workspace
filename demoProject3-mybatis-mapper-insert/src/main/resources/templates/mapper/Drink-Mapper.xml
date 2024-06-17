@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        
+ <mapper namespace="com.example.demo.mapper.DrinkMapper"><!-- GoodsMapper에 goods 테이블과 관련된된 모든 id 작성 -->
+	<!-- sql에 값을 집어넣을 때 java에서 참조한 변수명 위치를 갖고오기 위해  parameterType에 변수명 위치 작성-->
+	<!-- 작성한 id는 Mapper Service Controller에서 모든 메서드명으로 통일해서 작성 -->
+	<insert id="insertDrink" parameterType="com.example.demo.dto.Drink">
+	
+		<!-- SQL에 작성할 테이블 id, name, price, quantity -->
+		INSERT INTO drink (drinks_id,drinks_name,drinks_price,drinks_quantity)
+							<!-- #{dto.Goods에 적은 변수명}과 SQL에 연결할 컬럼명 각각 작성해주기 -->
+		VALUES (drink_seq.nextval, #{drinkName},#{drinkPrice},#{drinkQuantity})
+		
+	</insert>
+</mapper>
