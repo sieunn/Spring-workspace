@@ -9,8 +9,8 @@ import com.example.demo.dto.Goods;
 
 @Controller
 
-public class indexController {
-	@GetMapping("/")
+public class IndexController {
+	@GetMapping("/productRegister")
 	public String registerForm(Model model) {
 		model.addAttribute("goods", new Goods());
 		model.addAttribute("drink", new Drink());
