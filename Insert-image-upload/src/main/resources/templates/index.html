@@ -2,32 +2,30 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="utf-8">
-<title>돼지 목록</title>
-<link rel="stylesheet" href="/css/styles.css">
-
+<title>옷 목록</title>
 </head>
 <body>
-	<h1>돼지목록</h1>
+
+<h1>옷목록</h1>
 	<table>
 		<thead>
 			<tr>
 				<th>이미지</th>
 				<th>이름</th>
-				<th>상세페이지로 이동하기</th>
+				<th>가격</th>
+				<th>카테고리</th>
 			<tr>
 		</thead>
 		<tbody>
 		<!--  PigController.java 	model.addAttribute("pigs",pigs); -->
-			<tr th:each="  p    :  ${pigs}">
+			<tr th:each="  c    :  ${clothes}">
 				<td>
-					<img  th:src="@{${p.pig_image_path}}" >
+					<img  th:src="@{${c.clothes_image_path}}" >
 				</td>
-				<td  th:text="${p.pig_name}"> </td>
-				<td>
-					<a th:href="@{'/pigDetail/' + ${p.pig_id}}">이동하기</a>
-				</td>
+				<td  th:text="${c.clothes_name}"></td>
+				<td  th:text="${c.clothes_price}"></td>
+				<td  th:text="${c.clothes_category}"></td>
 			</tr>
-		
 		</tbody>
 	</table>
 	<a href="/imageUpload">이미지업로드</a>
