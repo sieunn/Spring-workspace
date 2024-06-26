@@ -8,6 +8,7 @@
 	<h1>아이러브아카데미 - 내친구찾기</h1>
 	<form th:action="@{/search}" method="post"> <!-- get은 db에서 가져오는것 , post는 db에다 뭔가 하는것 -->
 		<input type="text" name="keyword" placeholder="이름 또는 전화번호 입력" required>
+		<!-- name:"keyword" -> th:field: "" 로 변경가능 -->
 		<button>검색하기</button>
 		
 	</form>

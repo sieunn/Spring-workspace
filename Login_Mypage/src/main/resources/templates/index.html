@@ -5,6 +5,15 @@
 <title>홈페이지 메인</title>
 </head>
 <body>
+	<!-- 어디서든지 session 붙으면 임시저장 가져와서 사용하겟다라는 규칙 -->
+	<!-- sessin은 우리가 특별히 model.addAttribute나 어떤 값으로 전달하지 않아도
+		컴퓨터에서 임시로 저장한다는 의미가 담겨있고
+		session.setAttribute("임시저장에사용할변수명",변수에담을내용); 이렇게 자바에서 전달이 오면
+	 	
+	 	html 파일에서는
+	 	session.임시저장에사용할변수명 을 작성해주면됨
+	 	맨 앞에 session.은 컴퓨터상의 약속이기 때문에 붙여줌
+	 -->
 	<div th:if="${session.loginSession != null}">
 		<p th:text="${session.loginSession.member_name} + '환영해요.' "></p>
 		<a href="/logout">로그아웃</a>

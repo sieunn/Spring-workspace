@@ -87,6 +87,34 @@ public class LoginController {
 		return "modifyProfile";
 	}
 	
+	/*
+	 * @PostMapping("/modifyProfile") 코드 설명
+	 * Member updateMember 와 Member member
+	 * Member updateMember 는 소비자(클라이언트)가 새롭게 작성하고 DB에 덮어쓸 내용이 임시저장되어있음
+	 * Member member 는 소비자(클라이언트)가 기존에 DB에 저장한 값 
+	 * 
+	 * Member member = (Member) session.getAttribute("loginSession");
+	 * 			└── session에서 loginSession 이라는 변수명에 저장된 로그인 정보를 가져오기
+	 * 				가져와서 member 기존에 DB에 저장된 값을 불러오기
+	 * 
+	 * updateMember.setMember_id(member.getMember_id()); -- 덮어쓰기
+	 * 			└── DB에 저장된 값 중 id는 개발자가 회원가입을 한 순번을 소비자한테 부여한 순서값으로
+	 * 				소비자가 가입한 순서는 변경할 수 없기 때문에 (소비자에 의해 변경될수 없기 때문에)
+	 * 				id값으로 소비자가 새롭게 input 창 안에 수정해서 작성한 값을 가져와서 임시저장
+	 * 
+	 * 				setMember_id			member.getMember_id()
+	 *
+	 * 				member.getMember_id() -- 기존에 DB에 저장된 정보
+	 * 				setMember_id		  -- 새롭게 DB에 저장할 정보
+	 * 									  아이디(회원가입한 순서)는 똑같지만 밑 내용은 다를 수 잇음
+	 * 
+	 * memberService.updateMember(updateMember);
+	 * 			└── 덮어쓰기 한 내용을 DB에 저장하기	
+	 * 
+	 * session.setAttribute("loginSession", updateMember);
+	 * 			└── 새롭게 DB에 저장된 내용을 loginSession 이라는 변수명에 다시 저장
+	 * 
+	 * */
 	@PostMapping("/modifyProfile")
 	public String updateMember (HttpSession session, Member updateMember) {
 		
@@ -99,7 +127,7 @@ public class LoginController {
 		}
 		
 		updateMember.setMember_id(member.getMember_id());
-		memberService.updateMember(updateMember);
+		memberService.updateMember(updateMember); //기존내용에서 새로운내용 덮어쓰기
 		session.setAttribute("loginSession", updateMember);
 		return "redirect:/mypage";
 	}
@@ -120,6 +148,21 @@ public class LoginController {
 		
 	}
 	
+	
+	
+	/*
+	 * @RequestParam("keyword") String keyword
+	 * 
+	 * <input type="text" name="keyword" placeholder="이름 또는 전화번호 입력" required> -> search.html
+	 * 
+	 * @RequestParam("input이나 태그에 작성한 name 또는 th로 작성된 변수명") String keyword
+	 * input 에서 name값이 "keyword" 이기 때문에 @RequestParam("keyword") 이라고 쓴것
+	 * input 에서 name, th:field 로 작성된 변수명과 무조건 일치해야함 @RequestParam("      ")
+	 * 
+	 * String keyword는 input에서 바라보는 keyword라는 값을 가져와서
+	 * 자바에서 가져온 값을 담을 공간
+	 * */
+	
 	//검색하는 화면 보일 수 있도록 @GetMapping
 	@GetMapping("/search")
 	public String showSearchFor(Model model) {
@@ -127,9 +170,13 @@ public class LoginController {
 	}
 	
 	@PostMapping("/search")
+											//String keyword안에 @RequestParam으로 받아온 소비자가 작성한 keyword값 담겨있음
 	public String searchMember(Model model, @RequestParam("keyword")String keyword) {
 		List<Member> member = memberService.searchMembers(keyword);
 		model.addAttribute("results",member);
+		//member 안에 DB에서 검색으로 가져온 결과들이 있음 
+		//results는 검색결과가 member라는 이름으로 담겨있는 그릇
+		//model.addAttribute는 results를 search.html 로 넘겨주는 운송하는 수단
 		return "search";
 	}
 }
